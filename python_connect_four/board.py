@@ -12,17 +12,24 @@ class Board:
         for row in self.matrix:
             print(row)
 
+    def find_curr_height(self, col):
+        curr = len(self.matrix) - 1
+        while self.matrix[curr][col] != 0:
+            curr -= 1
+        return curr
+
     def drop_char(self, col: int, num: int) -> None:
         self.matrix[0][col] = num
         row = 0
         while True:
-            if len(self.matrix)-1 == row or self.matrix[row-1][col] != 0:
+            if len(self.matrix)-1 == row or self.matrix[self.find_curr_height(col)][col] != 0:
                 break
             self.matrix[row+1][col], self.matrix[row][col] = self.matrix[row][col], self.matrix[row+1][col]
             row += 1
             self.refresh_board()
             sleep(.2)
-        print(self.check_for_win(row, col))
+        if self.check_for_win(row, col):
+            print(f'{self.matrix[row][col]} WINS!!!')
 
     def check_for_win(self, row: int, col: int) -> bool:
         num = self.matrix[row][col]
