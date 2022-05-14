@@ -17,7 +17,6 @@ class Board:
         curr = len(self.matrix) - 1
         while self.matrix[curr][col] != 0:
             curr -= 1
-        print(curr)
         return curr
 
     def drop_char(self, col: int, num: int) -> None:
