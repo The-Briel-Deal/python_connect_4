@@ -10,26 +10,31 @@ class Board:
     def refresh_board(self) -> None:
         os.system("clear")
         for row in self.matrix:
-            print(row)
+            print(f"{row[0]}  {row[1]}  {row[2]}  {row[3]}  {row[4]}  {row[5]}  {row[6]}  {row[7]}  {row[8]}  {row[9]}")
+        print(("^  ^  ^  ^  ^  ^  ^  ^  ^  ^\n0  1  2  3  4  5  6  7  8  9"))
 
     def find_curr_height(self, col):
         curr = len(self.matrix) - 1
         while self.matrix[curr][col] != 0:
             curr -= 1
+        print(curr)
         return curr
 
     def drop_char(self, col: int, num: int) -> None:
         self.matrix[0][col] = num
         row = 0
         while True:
-            if len(self.matrix)-1 == row or self.matrix[self.find_curr_height(col)][col] != 0:
+            if len(self.matrix)-1 == row or row >= self.find_curr_height(col):
                 break
             self.matrix[row+1][col], self.matrix[row][col] = self.matrix[row][col], self.matrix[row+1][col]
             row += 1
             self.refresh_board()
             sleep(.2)
+            self.matrix[self.find_curr_height(col)][col] != 0
         if self.check_for_win(row, col):
+            os.system("clear")
             print(f'{self.matrix[row][col]} WINS!!!')
+            quit()
 
     def check_for_win(self, row: int, col: int) -> bool:
         num = self.matrix[row][col]
